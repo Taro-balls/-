@@ -1,0 +1,76 @@
+CREATE TABLE `dtsc` (
+  `id` int NOT NULL,
+  `name` char(20) DEFAULT NULL,
+  `site` char(50) DEFAULT NULL,
+  `time` char(20) DEFAULT NULL,
+  `renjun` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name1_fk_idx` (`name`),
+  KEY `xf_fk_idx` (`renjun`)
+) ；
+
+CREATE TABLE `tf` (
+  `id` int NOT NULL,
+  `site` char(50) DEFAULT NULL,
+  `goods` char(20) DEFAULT NULL,
+  `time` char(20) DEFAULT NULL,
+  `xf` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `xf_fk_idx` (`xf`),
+  CONSTRAINT `name_fk` FOREIGN KEY (`id`) REFERENCES `dtsc` (`id`)
+) ；
+
+CREATE TABLE `xfz` (
+  `id` int NOT NULL,
+  `age` char(20) DEFAULT NULL,
+  `ability` char(20) DEFAULT NULL,
+  `goods` char(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ability_fk_idx` (`ability`),
+  CONSTRAINT `ability_fk` FOREIGN KEY (`id`) REFERENCES `tf` (`id`)
+) ；
+
+SHOW TABLES;  # 显示所有表格
+DESC dtsc;  # 查询地摊市场信息表的表结构
+DESC tf;  # 查询摊贩信息表的表结构
+DESC xfz;  # 查询消费者信息表的表结构
+SELECT*FROM dtsc;  # 查询地摊市场信息表的详细数据
+SELECT*FROM tf;  # 查询地摊市场信息表的详细数据
+SELECT*FROM xfz;  # 查询地摊市场信息表的详细数据
+
+##USE gfidms;
+##SELECT xfz.ability,dtsc.renjun
+##FROM xfz,dtsc
+##WHERE xfz.ability = dtsc.renjun;
+
+##CREATE VIEW v_xfz
+##AS SELECT id,age,ability
+##FROM xfz
+##WHERE ability=60 and 30;
+##DESC v_xfz;
+
+##CREATE OR REPLACE VIEW v_xfz
+##AS SELECT id,age,ability
+##FROM xfz
+##WHERE ability=60;
+##DESC v_xfz;
+
+##BEGIN;
+##DELETE FROM v_xfz;
+##ROLLBACK;
+##INSERT INTO v_xfz VALUES('1');
+##SAVEPOINT a;
+##ROLLBACK TO a;
+##DELETE FROM v_xfz WHERE v_xfz_str = '1';
+##COMMIT;
+##ROLLBACK;
+
+##CREATE USER hoh@host IDENTIFIED BY '111111';  # 创建授权用户
+##ALTER USER hoh@host IDENTIFIED BY '121212';  # 修改用户密码
+##DROP USER hoh@host;  # 删除用户
+##GRANT ALL ON *.* TO hoh@host;  # 授予用户权限
+##Show grants for root@localhost;  # 显示权限
+##REVOKE SELECT ON *.* FROM hoh@host;  # 撤销用户权限
+##CREATE USER hh@host IDENTIFIED BY '111111';
+##grant all privileges on *.* to 'hh'@'%' identified by '111111' with grant option；
+##flush privileges;
